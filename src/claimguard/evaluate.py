@@ -11,6 +11,7 @@ from .rules import RULES, check_claims
 
 ROOT = Path(__file__).resolve().parents[2]
 CLAIMS_CSV = ROOT / "data" / "synthetic" / "claims.csv"
+CLAIMS_EASY_CSV = ROOT / "data" / "synthetic" / "claims_easy.csv"
 COSTS_CSV = ROOT / "data" / "procedure_costs.csv"
 
 
