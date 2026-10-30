@@ -1,0 +1,13 @@
+procedure,diagnosis,typical_cost (INR)
+Appendectomy,Acute appendicitis,"11,000"
+Cataract surgery,Cataract,"5,500"
+Normal delivery,Pregnancy at term,"11,000"
+Caesarean section,Obstructed / complicated labour,"14,500"
+Total knee replacement,Osteoarthritis of knee,"8,500"
+Inguinal hernia repair,Inguinal hernia,"15,000"
+Cholecystectomy,Gallstones,"22,800"
+Hysterectomy,Uterine fibroids,"25,000"
+Coronary angioplasty (PTCA),Coronary artery disease,"60,000"
+Fracture fixation (ORIF),Femur fracture,"30,000"
+Haemodialysis session,Chronic kidney disease,"1,500"
+Tonsillectomy,Chronic tonsillitis,"12,000"
