@@ -67,4 +67,6 @@ def print_report(m: dict) -> None:
 
 
 if __name__ == "__main__":
-    print_report(evaluate())
+    for name, path in [("EASY", CLAIMS_EASY_CSV), ("HARD", CLAIMS_CSV)]:
+        print(f"\n##### {name} data #####")
+        print_report(evaluate(pd.read_csv(path)))
