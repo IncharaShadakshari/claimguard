@@ -1,6 +1,7 @@
 .venv
 .env
-__pycache__
 .env.txt
+__pycache__
 data/synthetic/docs/
-data/extraction_mismatches.csvdata/pipeline_results.csv
+data/extraction_mismatches.csv
+data/pipeline_results.csv
