@@ -46,6 +46,40 @@ Agentic AI system that triages health insurance claims and flags fraud risk. It 
 
 
 
+\## LLM results (Groq, openai/gpt-oss-20b)
+
+
+
+\*\*Document extraction\*\* (plain-text hospital documents, messy date and amount formats, "advance paid" distractor): 50/50 claims fully correct, including 40 fraud claims. The model copied impossible dates and wrong diagnoses faithfully instead of "fixing" them. Caveat: documents are clean typed text, not scans, so this is an easy test.
+
+
+
+\*\*Policy agent\*\* (10-clause sample policy, BM25 retrieval, LLM cites violated clauses; 40 fraud + 10 clean claims):
+
+
+
+| Fraud type | Flagged | Correct clause cited |
+
+|---|---|---|
+
+| Waiting period | 10/10 | 10/10 |
+
+| Date mismatch | 10/10 | 10/10 |
+
+| Diagnosis-procedure mismatch | 10/10 | 10/10 |
+
+| Inflated billing | 8/10 | 8/10 |
+
+
+
+0/10 clean claims flagged, 0 invented clause IDs (invented IDs are dropped and counted).
+
+
+
+\*\*Honest notes:\*\* retrieval is trivial with only 10 clauses (always the same \~6 are retrieved). Claim facts such as day counts are computed in code, not by the LLM. Duplicates cannot be found by this agent and are handled by the rule check.
+
+
+
 \## What went wrong (failure analysis)
 
 \- \*\*Duplicates were flagged twice.\*\* Without a submission timestamp the rule flags both copies, so the genuine original becomes a false positive (7 on hard data).
