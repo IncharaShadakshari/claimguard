@@ -2,5 +2,5 @@
 .env
 __pycache__
 .env.txt
-data\synthetic\docs\
-data\extraction_mismatches.csv
+data/synthetic/docs/
+data/extraction_mismatches.csv
