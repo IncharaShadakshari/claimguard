@@ -80,6 +80,44 @@ Agentic AI system that triages health insurance claims and flags fraud risk. It 
 
 
 
+\## Full pipeline results (LangGraph workflow, Groq gpt-oss-20b)
+
+
+
+Workflow: extract fields from the document, run rule checks (with a duplicate ledger), ask the policy agent which clauses are violated, combine signals into a risk score, and send anything above the approve threshold to a human reviewer. Nothing is ever auto-denied.
+
+
+
+Evaluated on a stratified sample of 37 hard-mode claims (20 fraud, 17 clean):
+
+
+
+| TP | FP | FN | TN | Precision | Recall |
+
+|---|---|---|---|---|---|
+
+| 20 | 2 | 0 | 15 | 90.9% | 100% |
+
+
+
+All 20 fraud claims were flagged and the correct fraud signal was named each time. Date mismatches and duplicates scored high-risk (0.9); waiting-period, diagnosis mismatch and inflated billing went to human review (0.5-0.7).
+
+
+
+\*\*Read this carefully:\*\*
+
+\- The sample is enriched (54% fraud, plus 3 deliberately expensive legitimate claims). These numbers are not population estimates. At a realistic 15% fraud rate, precision would be lower.
+
+\- Both false positives were legitimate claims billed 1.3-1.8x the usual charge. They scored 0.5, so they go to a human reviewer rather than being rejected.
+
+\- The rule-only baseline missed 8 of 15 duplicates on hard data because of name typos. The workflow fixes this with a duplicate ledger that ignores the patient name. That improvement is a logic change, not an LLM gain. An ablation (rules + ledger, no LLM) is planned.
+
+\- Signal weights are hand-set, not learned. Duplicates are evaluated in simulated submission order because the synthetic data has no timestamps.
+
+\- Human review is demonstrated with LangGraph's interrupt/resume: the graph pauses on a flagged claim, shows the evidence, and records the reviewer's decision.
+
+
+
 \## What went wrong (failure analysis)
 
 \- \*\*Duplicates were flagged twice.\*\* Without a submission timestamp the rule flags both copies, so the genuine original becomes a false positive (7 on hard data).
@@ -98,11 +136,11 @@ Agentic AI system that triages health insurance claims and flags fraud risk. It 
 
 \- \[x] Rule-based baseline and evaluation
 
-\- \[ ] LLM document extraction (bills, discharge summaries)
+\- \[x] LLM document extraction (bills, discharge summaries)
 
-\- \[ ] Policy clause retrieval (RAG)
+\- \[x] Policy clause retrieval (RAG)
 
-\- \[ ] Multi-agent workflow with human review
+\- \[x] Multi-agent workflow with human review
 
 \- \[ ] Streamlit demo and deployment
 
