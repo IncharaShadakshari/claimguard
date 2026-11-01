@@ -150,9 +150,15 @@ def print_report(r: dict) -> None:
 if __name__ == "__main__":
     ap = argparse.ArgumentParser()
     ap.add_argument("--n", type=int, default=15)
+    ap.add_argument("--fraud", type=int, default=0, help="number of fraud claims to test")
+    ap.add_argument("--clean", type=int, default=0, help="number of clean claims to test")
     ap.add_argument("--model", default=DEFAULT_MODEL)
     args = ap.parse_args()
     claims = pd.read_csv(CLAIMS_CSV)
+    if args.fraud or args.clean:
+        claims = pd.concat([claims[claims["is_fraud"]].head(args.fraud),
+                            claims[~claims["is_fraud"]].head(args.clean)])
+        args.n = len(claims)
     result = run_eval(claims, DOCS_DIR, make_groq_llm(args.model), args.n, sleep=SLEEP_SECONDS)
     print_report(result)
     pd.DataFrame(result["mismatches"]).to_csv(MISMATCH_CSV, index=False)

@@ -3,3 +3,4 @@
 __pycache__
 .env.txt
 data\synthetic\docs\
+data\extraction_mismatches.csv
