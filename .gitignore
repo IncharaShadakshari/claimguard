@@ -3,4 +3,4 @@
 __pycache__
 .env.txt
 data/synthetic/docs/
-data/extraction_mismatches.csv
+data/extraction_mismatches.csvdata/pipeline_results.csv
