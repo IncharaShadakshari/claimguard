@@ -73,7 +73,7 @@ def extract_claim(llm_fn, doc_text: str):
         return None, f"{type(e).__name__}: {str(e)[:150]}"
 
 
-def make_groq_llm(model: str = DEFAULT_MODEL):
+def make_groq_llm(model: str = DEFAULT_MODEL, system_prompt: str = SYSTEM_PROMPT):
     from dotenv import load_dotenv
     from groq import Groq
 
@@ -86,7 +86,7 @@ def make_groq_llm(model: str = DEFAULT_MODEL):
             try:
                 r = client.chat.completions.create(
                     model=model, temperature=0, extra_body=extra,
-                    messages=[{"role": "system", "content": SYSTEM_PROMPT},
+                    messages=[{"role": "system", "content": system_prompt},
                               {"role": "user", "content": doc_text}],
                 )
                 return r.choices[0].message.content or ""
